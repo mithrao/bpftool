@@ -67,7 +67,7 @@ const char * const prog_type_name[] = {
 	[BPF_PROG_TYPE_EXT]			= "ext",
 	[BPF_PROG_TYPE_LSM]			= "lsm",
 	[BPF_PROG_TYPE_SK_LOOKUP]		= "sk_lookup",
-	[BPF_PROG_TYPE_IOURING]		= "iouring"
+	[BPF_PROG_TYPE_CQRING]		= "cqring"
 };
 
 const size_t prog_type_name_size = ARRAY_SIZE(prog_type_name);
