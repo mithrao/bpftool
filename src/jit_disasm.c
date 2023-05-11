@@ -28,6 +28,18 @@
 #include "json_writer.h"
 #include "main.h"
 
+static int fprintf_styled(void *, enum disassembler_style, const char* fmt, ...)
+{
+  va_list args;
+  int r;
+
+  va_start(args, fmt);
+  r = vprintf(fmt, args);
+  va_end(args);
+
+  return r;
+}
+
 static void get_exec_path(char *tpath, size_t size)
 {
 	const char *path = "/proc/self/exe";
@@ -100,10 +112,12 @@ void disasm_print_insn(unsigned char *image, ssize_t len, int opcodes,
 
 	if (json_output)
 		init_disassemble_info(&info, stdout,
-				      (fprintf_ftype) fprintf_json);
+				      (fprintf_ftype) fprintf_json,
+					  fprintf_styled);
 	else
 		init_disassemble_info(&info, stdout,
-				      (fprintf_ftype) fprintf);
+				      (fprintf_ftype) fprintf,
+					  fprintf_styled);
 
 	/* Update architecture info for offload. */
 	if (arch) {
